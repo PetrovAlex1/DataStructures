@@ -155,6 +155,8 @@ public:
 
 	class DAIterator
 	{
+		friend class DynamicArray;
+
 	private:
 		Type* pointer;
 
@@ -194,9 +196,14 @@ public:
 			return pointer;
 		}
 
+		bool operator==(const DAIterator& other) const
+		{
+			return (pointer == other.pointer);
+		}
+
 		bool operator!=(const DAIterator& other) const
 		{
-			return !(this == &other)
+			return !(*this == other);
 		}
 
 		const Type& operator[](const int& offset) const
