@@ -357,12 +357,12 @@ public:
 			return res;
 		}
 
-		bool operator==(const DQIterator& other)
+		bool operator==(const DQIterator& other) const
 		{
 			return (pointer == other.pointer);
 		}
 
-		bool operator!=(const DQIterator& other)
+		bool operator!=(const DQIterator& other) const
 		{
 			return !(*this == other);
 		}
