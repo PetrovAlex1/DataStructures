@@ -19,10 +19,23 @@ int main()
 
 	std::cout << dq2.getAllocator().getAllocationsCount() << std::endl;
 
+	dq1.pop_front();
+	dq1.pop_front();
+	dq1.pop_front();
+	dq1.push_back(12);
+	dq1.push_back(15);
+	dq1.push_back(25);
+	dq1.push_back(17);
+	dq1.push_back(8);
+	dq1.push_back(22);
+	dq1.push_back(267);
+
 	for (Deque<int>::DQIterator i = dq1.begin(); i != dq1.end(); ++i)
 	{
 		std::cout << *i << " ";
 	}
+
+	std::cout << std::endl;
 
 	return  0;
 }
