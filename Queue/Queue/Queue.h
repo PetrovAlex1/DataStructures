@@ -14,13 +14,18 @@ private:
 	{
 		T* newData = new T[s_capacity * 2];
 
-		for (int i = 0; i < s_size; i++)
+		int j = 0;
+
+		for (int i = s_first; i < s_last; i = (i + 1) % s_capacity)
 		{
-			newData[i] = s_data[i];
+			newData[j] = s_data[i];
+			j++;
 		}
 
 		delete[] s_data;
 		s_data = newData;
+		s_first = 0;
+		s_last = j;
 		s_capacity *= 2;
 	}
 public:
@@ -48,7 +53,7 @@ public:
 
 	T& front()
 	{
-		if (s_size == 0)
+		if (isEmpty())
 		{
 			throw std::out_of_range("Queue is empty!");
 		}
@@ -58,7 +63,7 @@ public:
 
 	const T& front() const
 	{
-		if (s_size == 0)
+		if (isEmpty())
 		{
 			throw std::out_of_range("Queue is empty!");
 		}
@@ -68,7 +73,7 @@ public:
 
 	T& back()
 	{
-		if (s_size == 0)
+		if (isEmpty())
 		{
 			throw std::out_of_range("Queue is empty!");
 		}
@@ -78,7 +83,7 @@ public:
 
 	const T& back() const
 	{
-		if (s_size == 0)
+		if (isEmpty())
 		{
 			throw std::out_of_range("Queue is empty!");
 		}
@@ -88,33 +93,39 @@ public:
 
 	void enqueue(const T& element)
 	{
-		if (s_size == s_capacity)
+		if (isFull())
 		{
 			resize();
 		}
 
-		s_size++;
-		s_data[s_last++] = element;
+		s_data[s_last] = element;
+		s_last = (s_last + 1) % s_capacity;
 	}
 
-	void dequeue()
+	T dequeue()
 	{
-		if (s_size == 0)
+		if (isEmpty())
 		{
 			throw std::out_of_range("Queue is empty!");
 		}
 
-		s_size--;
-		s_first++;
+		T toRemove = s_data[s_first];
+		s_first = (s_first + 1) % s_capacity;
+		return toRemove;
 	}
 
 	size_t size() const
 	{
-		return s_last - s_first;
+		return (s_last + s_capacity - s_first) % s_capacity;
 	}
 
 	bool isEmpty() const
 	{
 		return size() == 0;
+	}
+
+	bool isFull() const
+	{
+		return s_last % s_capacity == s_first;
 	}
 };
