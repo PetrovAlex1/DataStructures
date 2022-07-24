@@ -241,18 +241,6 @@ private:
 	{
 		return first > second ? first : second;
 	}
-
-	//TO BE REMOED
-	bool existRec(const T& elem, const Node* r) const {
-		if (r == nullptr)
-			return false;
-		else if (r->data == elem)
-			return true;
-		else if (r->data < elem)
-			return existRec(elem, r->right);
-		else
-			return existRec(elem, r->left);
-	}
 public:
 
 	AVLTree()
@@ -299,60 +287,6 @@ public:
 		return result;
 	}
 
-	//TO BE REMOVED
-	class iterator {
-	private:
-		Node* currNode;
-
-		iterator(Node* r) : currNode(r) {}
-	public:
-		iterator() = delete;
-		iterator(const iterator&) = default;
-
-		iterator(const AVLTree& tree) : currNode(tree.root) {}
-
-		iterator operator++() const {
-			if (isValid()) {
-				return iterator(currNode->right);
-			}
-			return iterator(currNode);
-		}
-
-		int getHeight() const {
-			if (!currNode)
-				return 0;
-
-			return currNode->height;
-		}
-
-		const T& currData() const {
-			return currNode->data;
-		}
-
-		const T& operator*() const {
-			return currNode->data;
-		}
-
-		iterator operator--() const {
-			if (isValid()) {
-				return iterator(currNode->left);
-			}
-			return iterator(currNode);
-		}
-
-		bool isValid() const {
-			return currNode != nullptr;
-		}
-	};
-
-	AVLTree<T>::iterator begin() const {
-		return AVLTree::iterator(*this);
-	}
-
-	bool exists(const T& elem) const {
-		return existRec(elem, root);
-	}
-
 	int getNodesCount() const {
 		return nodesCount;
 	}
@@ -360,6 +294,4 @@ public:
 	int getHeightT() const {
 		return root ? root->height : 0;
 	}
-
-	//TO BE REMOVED
 };
