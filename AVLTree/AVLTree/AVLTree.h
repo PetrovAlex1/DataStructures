@@ -126,16 +126,12 @@ private:
 			}
 			else
 			{
-				/*	Node* minElement = extractMin(current->right);
-					minElement->left = current->left;
-					minElement->right = current->right;
-					delete current;
-					current = nullptr;
-					current = minElement;*/
-
-				Node* minElement = findMin(current->right);
-				current->data = minElement->data;
-				recursiveRemove(current->right, minElement->data);
+				Node* minElement = extractMin(current->right);
+				minElement->left = current->left;
+				minElement->right = current->right;
+				delete current;
+				current = nullptr;
+				current = minElement;
 			}
 		}
 
@@ -173,6 +169,11 @@ private:
 		{
 			minElement = current;
 			current = current->right ? current->right : nullptr;
+		}
+
+		if (current)
+		{
+			current->height = max(getHeight(current->left), getHeight(current->right)) + 1;
 		}
 
 		Balance(current);
