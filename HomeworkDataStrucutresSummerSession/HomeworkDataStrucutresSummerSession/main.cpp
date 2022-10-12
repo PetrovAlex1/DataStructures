@@ -3,7 +3,8 @@
 
 int main()
 {
-	//Engine e;
+	Engine e;
+	e.StartUp();
 
 	return 0;
 }
